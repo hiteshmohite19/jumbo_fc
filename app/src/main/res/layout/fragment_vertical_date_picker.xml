@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerticalDatePicker">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateInput"
+        android:layout_marginTop="30dp"
+        android:weightSum="3"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Departure"
+            android:layout_weight="1"
+            android:id="@+id/departure"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Arrival"
+            android:layout_weight="1"
+            android:id="@+id/arrival"/>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:id="@+id/done"
+            android:text="Done"
+            android:textSize="10sp"
+            android:background="@color/darkGrey"/>
+    </LinearLayout>
+
+    <com.squareup.timessquare.CalendarPickerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/dateInput"
+        android:id="@+id/calendar_picker_view"/>
+
+</RelativeLayout>

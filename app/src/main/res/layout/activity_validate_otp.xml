@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ValidateOtp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarLogin"
+        android:layout_width="match_parent"
+        android:background="@drawable/background_gradient"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <TextView
+            android:id="@+id/titleSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Account Validation"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginRight="80dp"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="A One Time Password(OTP) has been share to your registered email ID.Please enter it below to validate your account and login"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="35dp"
+        android:gravity="center"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/otpLayout"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:errorEnabled="true"
+        android:focusableInTouchMode="true"
+        android:hint="OTP"
+        android:layout_marginHorizontal="10dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/otp"
+            android:textSize="20sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/resend"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:gravity="end"
+        android:layout_marginHorizontal="20dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/validate"
+        android:text="Validate"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/button_gradient"/>
+
+</LinearLayout>
