@@ -23,6 +23,7 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
     ArrayList<DateList> dateList;
     int price=3000;
     int pos;
+    String[] mMonthList={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +55,19 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
 
             String date,day,month,year;
             Date d=calendar.getTime();
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE-yyyy-MM-dd");
             String date1=simpleDateFormat.format(d);
 //            Log.d(TAG, "date : "+date+" "+selectedDate);
+            String[] dateArray=date1.split("-");
+//            String dt=d.toString();
 
-            String dt=d.toString();
-            calendar.add(Calendar.DATE,1);
-            day=dt.substring(0,3);
-            date=dt.substring(8,10);
+            day=dateArray[0];
+            date=dateArray[3];
             date.replace("-","0");
-            month=dt.substring(4,7);
-            year=dt.substring(dt.length()-4);
+            month=dateArray[2];
+            year=dateArray[1];
 
-            if(date1==selectedDate){
+            if(date1.equals(selectedDate)){
                 pos=j;
             }
 
@@ -76,10 +77,10 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
             dateList1.setMonth(month);
             dateList1.setYear(year);
             dateList1.setPrice(price);
-
+            Log.d(TAG, "getData: "+day+" "+date+" "+month+" "+year);
             dateList.add(dateList1);
             price++;
-
+            calendar.add(Calendar.DATE,1);
         }
 
 
@@ -95,7 +96,7 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
 
     @Override
     public void monthPosition(int month) {
-        tvMonth.setText(dateList.get(month).getMonth().toString());
+        tvMonth.setText(mMonthList[Integer.parseInt(dateList.get(month).getMonth())]);
     }
 
     @Override

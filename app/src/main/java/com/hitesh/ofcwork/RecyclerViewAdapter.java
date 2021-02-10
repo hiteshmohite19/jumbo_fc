@@ -34,7 +34,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.context=context;
         this.selectedDate=selectedDate;
         this.linearLayoutManager=linearLayoutManager;
-        this.n=n;
     }
 
     @NonNull
@@ -50,6 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if(linearLayoutManager.findFirstCompletelyVisibleItemPosition()!=-1){
             getMonth.monthPosition(linearLayoutManager.findFirstCompletelyVisibleItemPosition());
         }
+        todayDate=dateList.get(0).getYear()+"-"+dateList.get(0).getMonth()+"-"+dateList.get(0).getDate();
 //        Log.d(TAG, "onBindViewHolder: "+selectedDate);
         Log.d(TAG, "position : "+linearLayoutManager.findFirstCompletelyVisibleItemPosition());
         day=String.valueOf(dateList.get(position).getDay());
@@ -59,7 +59,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         month=String.valueOf(dateList.get(position).getMonth());
         year=String.valueOf(dateList.get(position).getYear());
 
-        Log.d(TAG, "onBindViewHolder: "+selectedDate+" : "+date+" "+month+" "+year);
+        String updatingDate=year+"-"+month+"-"+date;
+
+        Log.d(TAG, "get values : "+selectedDate+" : "+updatingDate+" "+todayDate);
         holder.price.setText(String.valueOf(dateList.get(position).getPrice()));
 
         getMonth.getYear(year);
@@ -76,8 +78,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 finalDate= dDate+" "+mMonthList[monthPos-1]+" "+yYear;
 //            Log.d(TAG, "final Date: "+finalDate);
 
-            if(date.equals(dDate)&&month.equals(mMonthList[monthPos-1])&&year.equals(yYear)){
+            if(updatingDate.equals(selectedDate)){
 //                Log.d(TAG, "selectedDate: "+position);
+                Log.d(TAG, "onBindViewHolder:true ");
                 holder.date.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.date.setBackground(context.getResources().getDrawable(R.drawable.date_background));
             } else{
@@ -97,7 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 notifyDataSetChanged();
             }
         });
-        todayDate(holder);
+        todayDate(holder,updatingDate);
     }
 
 
@@ -114,21 +117,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    void todayDate(ViewHolder holder){
-        String dDay,dMonth,dDate,yYear;
-        dDay=todayDate.substring(0,3);
-        dDate=todayDate.substring(8,10);
-        dMonth=todayDate.substring(4,7);
-        yYear=todayDate.substring(todayDate.length()-4);
+    void todayDate(ViewHolder holder,String updatingDate){
+        Log.d(TAG, "todayDate: "+todayDate);
 
-        if(date.equals(dDate)&&month.equals(dMonth)&&year.equals(yYear)){
+        if(updatingDate.equals(todayDate)){
+            Log.d(TAG, "todayDate: true");
             holder.date.setTextColor(Color.parseColor("#E52235"));
-            //holder.date.setBackground(context.getResources().getDrawable(R.drawable.first_date));
         }
-//        else{
-//            holder.date.setBackgroundColor(Color.parseColor("#FFFFFF"));
-//            holder.date.setTextColor(Color.parseColor("#000000"));
-//        }
     }
 
 
