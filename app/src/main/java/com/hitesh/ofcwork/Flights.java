@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.GetMonth {
+public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.GetPositions {
 
     String TAG="project";
     String selectedDate;
@@ -57,9 +57,9 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
             Date d=calendar.getTime();
             SimpleDateFormat simpleDateFormat=new SimpleDateFormat("EEE-yyyy-MM-dd");
             String date1=simpleDateFormat.format(d);
-//            Log.d(TAG, "date : "+date+" "+selectedDate);
+
             String[] dateArray=date1.split("-");
-//            String dt=d.toString();
+
 
             day=dateArray[0];
             date=dateArray[3];
@@ -67,7 +67,9 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
             month=dateArray[2];
             year=dateArray[1];
 
-            if(date1.equals(selectedDate)){
+
+            if(date1.substring(4).equals(selectedDate)){
+
                 pos=j;
             }
 
@@ -77,7 +79,7 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
             dateList1.setMonth(month);
             dateList1.setYear(year);
             dateList1.setPrice(price);
-            Log.d(TAG, "getData: "+day+" "+date+" "+month+" "+year);
+
             dateList.add(dateList1);
             price++;
             calendar.add(Calendar.DATE,1);
@@ -96,11 +98,14 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
 
     @Override
     public void monthPosition(int month) {
-        tvMonth.setText(mMonthList[Integer.parseInt(dateList.get(month).getMonth())]);
+        tvMonth.setText((mMonthList[Integer.parseInt(dateList.get(month).getMonth())-1]));
     }
+
+
 
     @Override
     public void getYear(String year) {
         tvYear.setText(year);
     }
+
 }

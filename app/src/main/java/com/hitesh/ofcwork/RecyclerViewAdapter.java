@@ -19,7 +19,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     ArrayList<DateList> dateList;
     String TAG="project";
     ClickListener clickListener;
-    GetMonth getMonth;
+    GetPositions getPositions;
     String month,year,price,day,date,todayDate;
     String selectedDate,finalDate;
     LinearLayoutManager linearLayoutManager;
@@ -28,9 +28,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     int row=-1,count=0;
     int n;
 
-    public RecyclerViewAdapter(ArrayList<DateList> dateList, String selectedDate, GetMonth getMonth, Context context, LinearLayoutManager linearLayoutManager) {
+    public RecyclerViewAdapter(ArrayList<DateList> dateList, String selectedDate, GetPositions getPositions, Context context, LinearLayoutManager linearLayoutManager) {
         this.dateList = dateList;
-        this.getMonth=getMonth;
+        this.getPositions=getPositions;
         this.context=context;
         this.selectedDate=selectedDate;
         this.linearLayoutManager=linearLayoutManager;
@@ -47,7 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         if(linearLayoutManager.findFirstCompletelyVisibleItemPosition()!=-1){
-            getMonth.monthPosition(linearLayoutManager.findFirstCompletelyVisibleItemPosition());
+            getPositions.monthPosition(linearLayoutManager.findFirstCompletelyVisibleItemPosition());
         }
         todayDate=dateList.get(0).getYear()+"-"+dateList.get(0).getMonth()+"-"+dateList.get(0).getDate();
 //        Log.d(TAG, "onBindViewHolder: "+selectedDate);
@@ -62,10 +62,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String updatingDate=year+"-"+month+"-"+date;
 
         Log.d(TAG, "get values : "+selectedDate+" : "+updatingDate+" "+todayDate);
+
+
+
         holder.price.setText(String.valueOf(dateList.get(position).getPrice()));
 
-        getMonth.getYear(year);
+        getPositions.getYear(year);
 
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                row=position;
+                count++;
+                notifyDataSetChanged();
+            }
+        });
+
+        markingSelectedDate(count,holder,updatingDate,position);
+        Log.d(TAG, "markingSelectedDate: "+position);
+
+        if(count!=0){
+            dateSelectedOnClick(holder,position);
+        }
+
+        todayDate(holder,updatingDate);
+    }
+
+    public void markingSelectedDate(int count, ViewHolder holder,String updatingDate,int position){
         if(count==0){
 
             String dMonth,dDate,yYear;
@@ -79,8 +102,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //            Log.d(TAG, "final Date: "+finalDate);
 
             if(updatingDate.equals(selectedDate)){
-//                Log.d(TAG, "selectedDate: "+position);
-                Log.d(TAG, "onBindViewHolder:true ");
+                Log.d(TAG, "selectedDate: "+position+" "+updatingDate +" "+selectedDate);
                 holder.date.setTextColor(Color.parseColor("#FFFFFF"));
                 holder.date.setBackground(context.getResources().getDrawable(R.drawable.date_background));
             } else{
@@ -88,23 +110,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 holder.date.setTextColor(Color.parseColor("#000000"));
             }
         }
-        if(count!=0){
-            dateSelectedOnClick(holder,position);
-        }
-
-        holder.cardview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                row=position;
-                count++;
-                notifyDataSetChanged();
-            }
-        });
-        todayDate(holder,updatingDate);
     }
 
-
     void dateSelectedOnClick(ViewHolder holder,int position){
+        Log.d(TAG, "dateSelectedOnClick: "+position);
         if(row==position){
             holder.date.setTextColor(Color.parseColor("#FFFFFF"));
             holder.date.setBackground(context.getResources().getDrawable(R.drawable.date_background));
@@ -127,6 +136,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
+
     @Override
     public int getItemCount() {
         Log.d(TAG, "getItemCount: "+dateList.size());
@@ -139,7 +149,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView day,date,price;
         CardView cardview;
         ClickListener clickListener;
-        GetMonth getMonth;
+        GetPositions getPositions;
         Date todayDate=new Date();
         String tDate=todayDate.toString();
         private static final String TAG = "project";
@@ -166,8 +176,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         void onClick(int position);
     }
 
-    public interface GetMonth{
+    public interface GetPositions{
         void monthPosition(int month);
         void getYear(String year);
     }
+
 }
