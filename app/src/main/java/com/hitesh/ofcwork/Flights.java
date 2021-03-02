@@ -78,12 +78,13 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
             dateList1.setDay(day);
             dateList1.setMonth(month);
             dateList1.setYear(year);
-            dateList1.setPrice(price);
+//            dateList1.setPrice(price);
 
             dateList.add(dateList1);
-            price++;
+//            price++;
             calendar.add(Calendar.DATE,1);
         }
+
 
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -94,6 +95,8 @@ public class Flights extends AppCompatActivity implements  RecyclerViewAdapter.G
         recyclerView.setAdapter(recyclerViewAdapter);
 
     }
+
+
 
 
     @Override

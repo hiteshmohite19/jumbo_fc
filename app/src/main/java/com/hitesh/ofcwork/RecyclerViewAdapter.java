@@ -64,8 +64,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Log.d(TAG, "get values : "+selectedDate+" : "+updatingDate+" "+todayDate);
 
 
-
-        holder.price.setText(String.valueOf(dateList.get(position).getPrice()));
+        Log.d(TAG, "onBindViewHolder: "+dateList.get(position).getPrice());
+        if(dateList.get(position).getPrice()!=0.0f){
+            holder.price.setText(String.valueOf(dateList.get(position).getPrice()));
+            holder.price.setVisibility(View.VISIBLE);
+        }
 
         getPositions.getYear(year);
 
@@ -97,9 +100,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             yYear=selectedDate.substring(0,4);
             int monthPos=Integer.parseInt(dMonth);
 
+
             if(finalDate==null)
-                finalDate= dDate+" "+mMonthList[monthPos-1]+" "+yYear;
-//            Log.d(TAG, "final Date: "+finalDate);
+                finalDate= dDate+"-"+dMonth+"-"+yYear;
+
+
+            Log.d(TAG, "fd1: "+finalDate);
 
             if(updatingDate.equals(selectedDate)){
                 Log.d(TAG, "selectedDate: "+position+" "+updatingDate +" "+selectedDate);
@@ -117,8 +123,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if(row==position){
             holder.date.setTextColor(Color.parseColor("#FFFFFF"));
             holder.date.setBackground(context.getResources().getDrawable(R.drawable.date_background));
-            finalDate=dateList.get(position)+" "+dateList.get(position)+" "+dateList.get(position);
-            Log.d(TAG, "final date: "+finalDate);
+            finalDate=dateList.get(position).getDate()+"-"+dateList.get(position).getMonth()+"-"+dateList.get(position).getYear();
+            Log.d(TAG, "fd2: "+finalDate);
         } else{
             holder.date.setBackgroundColor(Color.parseColor("#FFFFFF"));
             holder.date.setTextColor(Color.parseColor("#000000"));
